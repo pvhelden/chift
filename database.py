@@ -25,6 +25,19 @@ def get_all_contacts(cursor):
     return contacts
 
 
+def get_contact_by_id(cursor, contact_id):
+    """
+    Fetches a specific contact from the local database using given id.
+
+    :param cursor: psycopg2 cursor object
+    :param contact_id: psycopg2 cursor object
+    :return: contact infox
+    """
+    cursor.execute(f"SELECT * FROM contact WHERE id={contact_id};")
+    contact = cursor.fetchone()
+    return contact
+
+
 def update_contacts(cursor, old_contacts, contacts):
     """
     Replaces old contacts in the local database from contacts in the Chift Odoo database.
