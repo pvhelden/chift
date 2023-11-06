@@ -4,6 +4,7 @@ import psycopg2.extensions
 
 import database
 import odoo
+import utils
 
 
 class TestOdoo(unittest.TestCase):
@@ -45,6 +46,20 @@ class TestDatabase(unittest.TestCase):
         contacts = database.get_all_contacts(self.cursor)
         print(contacts)
         self.assertTrue(len(contacts))
+
+    def test_update_contacts(self):
+        # Get local contacts
+        old_contacts = database.get_all_contacts(self.cursor)
+        old_contacts = utils.convert_from_database(old_contacts)
+
+        # Get fake Odoo contacts
+        contacts = [{'id': 1, 'name': 'test'}]
+        contacts = utils.convert_from_odoo(contacts)
+
+        database.update_contacts(self.cursor, old_contacts, contacts)
+
+        new_contacts = database.get_all_contacts(self.cursor)
+        self.assertEqual([(1, 'test')], new_contacts)
 
 
 if __name__ == '__main__':
