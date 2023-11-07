@@ -5,7 +5,7 @@ import utils
 
 def get_connection():
     """
-    Creates a local database connection object and returns it.
+    Establish a connection to the local PostgreSQL database and return the connection object.
 
     :return: psycopg2 connection object
     """
@@ -15,10 +15,10 @@ def get_connection():
 
 def get_all_contacts(cursor):
     """
-    Fetches all contacts from the local database.
+    Retrieve all contacts from the local database.
 
     :param cursor: psycopg2 cursor object
-    :return: list of contacts
+    :return: A list of contacts fetched from the local database.
     """
     cursor.execute(f"SELECT * FROM public.contact;")
     contacts = cursor.fetchall()
@@ -27,11 +27,12 @@ def get_all_contacts(cursor):
 
 def get_contact_by_id(cursor, contact_id):
     """
-    Fetches a specific contact from the local database using given id.
+    Retrieve a specific contact from the local database using its ID.
+
 
     :param cursor: psycopg2 cursor object
-    :param contact_id: psycopg2 cursor object
-    :return: contact infox
+    :param contact_id: The unique ID of the contact to fetch.
+    :return: Information about the contact as a tuple, or None if not found.
     """
     cursor.execute(f"SELECT * FROM public.contact WHERE id={contact_id};")
     contact = cursor.fetchone()
@@ -40,11 +41,11 @@ def get_contact_by_id(cursor, contact_id):
 
 def update_contacts(cursor, old_contacts, contacts):
     """
-    Replaces old contacts in the local database from contacts in the Chift Odoo database.
+    Synchronize and update local database contacts with Chift Odoo contacts.
 
     :param cursor: psycopg2 cursor object
-    :param old_contacts: list of old contacts from the local database
-    :param contacts: list of contacts from the Chift Odoo database
+    :param old_contacts: A dictionary of existing local contacts.
+    :param contacts: A dictionary of Chift Odoo contacts.
     :return: None
     """
     # Delete obsolete contacts from local database

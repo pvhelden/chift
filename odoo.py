@@ -8,9 +8,9 @@ PASS = 'N$!r9FwNzD67%i'
 
 def get_uid():
     """
-    Logs in to the Chift Odoo database, and fetches the user id.
+    Log in to the Chift Odoo database and retrieve the user ID.
 
-    :return: user id
+    :return: The user ID associated with the provided credentials.
     """
     uid = xmlrpc.client.ServerProxy(f'{URL}xmlrpc/common').login(DB, USER, PASS)
     return uid
@@ -18,10 +18,10 @@ def get_uid():
 
 def get_all_contacts(uid):
     """
-    Fetches all contacts from the Chift Odoo database.
+    Retrieve all contacts from the Chift Odoo database.
 
-    :param uid: user id
-    :return: list of contacts
+    :param uid: The user ID for authentication.
+    :return: A list of contact records fetched from the Odoo database.
     """
     models = xmlrpc.client.ServerProxy(f'{URL}/xmlrpc/2/object')
     contacts = models.execute_kw(DB, uid, PASS, 'res.partner', 'search_read', [[]], {'fields': ['name']})
