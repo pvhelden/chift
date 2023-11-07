@@ -9,7 +9,7 @@ def get_connection():
 
     :return: psycopg2 connection object
     """
-    conn = psycopg2.connect('dbname=chift-db user=pvhelden password=admin')
+    conn = psycopg2.connect('dbname=chift-db user=postgres password=admin')
     return conn
 
 
@@ -20,7 +20,7 @@ def get_all_contacts(cursor):
     :param cursor: psycopg2 cursor object
     :return: list of contacts
     """
-    cursor.execute(f"SELECT * FROM contact;")
+    cursor.execute(f"SELECT * FROM public.contacts;")
     contacts = cursor.fetchall()
     return contacts
 
@@ -33,7 +33,7 @@ def get_contact_by_id(cursor, contact_id):
     :param contact_id: psycopg2 cursor object
     :return: contact infox
     """
-    cursor.execute(f"SELECT * FROM contact WHERE id={contact_id};")
+    cursor.execute(f"SELECT * FROM public.contacts WHERE id={contact_id};")
     contact = cursor.fetchone()
     return contact
 
@@ -50,7 +50,7 @@ def update_contacts(cursor, old_contacts, contacts):
     # Delete obsolete contacts from local database
     delete_ids = old_contacts.keys() - contacts.keys()
     for old_contact_id in delete_ids:
-        cursor.execute(f"DELETE FROM contact WHERE id={old_contact_id};")
+        cursor.execute(f"DELETE FROM public.contacts WHERE id={old_contact_id};")
     print(f"Deleted {len(delete_ids)} obsolete contacts from local database.")
 
     # Add/update contacts from Chift Odoo database
@@ -59,8 +59,8 @@ def update_contacts(cursor, old_contacts, contacts):
         if contact_id in old_contacts:
             # Update existing contact
             if contact_name != old_contacts[contact_id]:
-                cursor.execute(f"UPDATE contact SET name='{name}' WHERE id={contact_id};")
+                cursor.execute(f"UPDATE public.contacts SET name='{name}' WHERE id={contact_id};")
         else:
             # Add new contact
-            cursor.execute(f"INSERT INTO contact VALUES({contact_id}, '{name}')")
+            cursor.execute(f"INSERT INTO public.contacts VALUES({contact_id}, '{name}')")
     print(f"Added/updated {len(contacts)} contacts in local database.")

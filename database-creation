@@ -1,5 +1,16 @@
-CREATE DATABASE chift-db;
-CREATE TABLE IF NOT EXISTS contacts (
-   id SMALLSERIAL PRIMARY_KEY,
-   name VARCHAR(50)
+CREATE DATABASE chift-db
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+CREATE TABLE public."Contacts"
+(
+    id smallint NOT NULL,
+    name character varying(50),
+    PRIMARY KEY (id)
 );
+
+ALTER TABLE IF EXISTS public."Contacts"
+    OWNER to postgres;

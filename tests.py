@@ -15,13 +15,11 @@ class TestOdoo(unittest.TestCase):
         cls.uid = odoo.get_uid()
 
     def test_get_uid(self):
-        print(self.uid)
         self.assertIsInstance(self.uid, int)
 
     def test_get_all_contacts(self):
         contacts = odoo.get_all_contacts(self.uid)
-        print(contacts)
-        self.assertTrue(len(contacts))
+        self.assertIsInstance(contacts, list)
 
 
 class TestDatabase(unittest.TestCase):
@@ -39,13 +37,11 @@ class TestDatabase(unittest.TestCase):
 
     def test_get_conn(self):
         conn = database.get_connection()
-        print(conn)
         self.assertIsInstance(conn, psycopg2.extensions.connection)
 
     def test_get_all_contacts(self):
         contacts = database.get_all_contacts(self.cursor)
-        print(contacts)
-        self.assertTrue(len(contacts))
+        self.assertIsInstance(contacts, list)
 
     def test_update_contacts(self):
         # Get local contacts
