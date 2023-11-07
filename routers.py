@@ -1,12 +1,19 @@
+import os
+
+from dotenv import load_dotenv
 from fastapi import APIRouter
 from sqlmodel import Session, create_engine, select
 from starlette.responses import JSONResponse
 
 from models import Contact
 
-DATABASE_URL = "postgresql://postgres:admin@localhost/chift-db"
+load_dotenv()
 
-engine = create_engine(DATABASE_URL)
+POSTGRES_DB = os.getenv('POSTGRES_DB')
+POSTGRES_USER = os.getenv('POSTGRES_USER')
+POSTGRES_PASS = os.getenv('POSTGRES_PASS')
+
+engine = create_engine(f"postgresql://{POSTGRES_USER}:{POSTGRES_PASS}@localhost/{POSTGRES_DB}")
 
 router = APIRouter()
 

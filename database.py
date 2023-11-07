@@ -1,6 +1,15 @@
+import os
+
 import psycopg2
+from dotenv import load_dotenv
 
 import utils
+
+load_dotenv()
+
+POSTGRES_DB = os.getenv('POSTGRES_DB')
+POSTGRES_USER = os.getenv('POSTGRES_USER')
+POSTGRES_PASS = os.getenv('POSTGRES_PASS')
 
 
 def get_connection():
@@ -9,7 +18,7 @@ def get_connection():
 
     :return: psycopg2 connection object
     """
-    conn = psycopg2.connect('dbname=chift-db user=postgres password=admin')
+    conn = psycopg2.connect(f'dbname={POSTGRES_DB} user={POSTGRES_USER} password={POSTGRES_PASS}')
     return conn
 
 
