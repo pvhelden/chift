@@ -9,7 +9,7 @@
 
 ## Requirements
 
-- A PostgreSQL database created using instructions in the `database-creation` file.
+- A PostgreSQL database created using instructions in the `database-creation.sql` file.
 - Python libraries listed in the `requirements.txt` file.
 
 ## Implementation
@@ -21,10 +21,12 @@ To run it, simply use `python ./cron.py` in a terminal.
 
 ### Database
 
+Parameters should be stored in a `.env` file.
 Uses a PostgreSQL database, which is accessed using the `psycopg2` Python library.
 
 ### Odoo
 
+Parameters should be stored in a `.env` file.
 Connects to the Chift Odoo database using the `xmlrpc` Python library.
 
 ### FastAPI

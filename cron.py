@@ -1,9 +1,10 @@
 import time
 
+import schedule
+
 import database
 import odoo
 import utils
-import schedule
 
 
 def update_contacts():
